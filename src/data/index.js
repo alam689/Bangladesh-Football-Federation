@@ -51,6 +51,27 @@
     P({ id:'w12', name:'Swapna Rani', pos:'MF', no:14, age:19, club:'ARB College', caps:12, goals:3, rating:7.3, foot:'Right', ht:157, value:'—', form:[7,8,7,8,7], status:'Available', district:'Rangpur', joined:2023, prospect:true }),
   ];
 
+  // ---------- Real player photos (freely-licensed, Wikimedia Commons) ----------
+  // Only well-known senior internationals have free-licensed photos; everyone
+  // else keeps the generated initials avatar. The Avatar component falls back
+  // to initials automatically if an image ever fails to load.
+  const PHOTOS = {
+    m1: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Anisurrahmanzico.2021.jpg/330px-Anisurrahmanzico.2021.jpg',
+    m2: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Tariq_Kazi_playing_for_Bangladesh_in_2023.jpg/330px-Tariq_Kazi_playing_for_Bangladesh_in_2023.jpg',
+    m3: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Topu_Barman_in_2021.jpg/330px-Topu_Barman_in_2021.jpg',
+    m4: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Hamza_Choudhury_23082025_%28portrait%29.jpg/330px-Hamza_Choudhury_23082025_%28portrait%29.jpg',
+    m5: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Jamal_Bhuyan_%28cropped%29.png/330px-Jamal_Bhuyan_%28cropped%29.png',
+    m6: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Sohel_Rana_in_2021.jpg/330px-Sohel_Rana_in_2021.jpg',
+    m7: 'https://upload.wikimedia.org/wikipedia/commons/f/fd/Rakib_Hossain_%28cropped%29.png',
+    w2: 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Masura_Parvin_%28cropped%29.jpg',
+    w4: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Maria_Manda_%28cropped%29.jpg',
+    w5: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Monica_Chakma_%28cropped%29.jpg',
+    w6: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Sanjida_Akther.jpg/330px-Sanjida_Akther.jpg',
+    w7: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sabina_Khatun%2C_Bangladesh_women%27s_football_team_arrival_SAFF_Championship_winners_Dhaka_2022-09-21_%28PID-0020986%29_%28cropped%29.jpg/330px-Sabina_Khatun%2C_Bangladesh_women%27s_football_team_arrival_SAFF_Championship_winners_Dhaka_2022-09-21_%28PID-0020986%29_%28cropped%29.jpg',
+    w9: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Ritu_Porna_Chakma%2C_Dhaka_%28cropped%29.jpg/330px-Ritu_Porna_Chakma%2C_Dhaka_%28cropped%29.jpg',
+  };
+  [...menSenior, ...womenSenior].forEach((p) => { if (PHOTOS[p.id]) p.photo = PHOTOS[p.id]; });
+
   // ---------- Build age-level squads by trimming + ageing down ----------
   function makeYouth(src, label, maxAge, prefix) {
     const pick = src.filter(p => p.prospect).concat(src.filter(p => !p.prospect));
@@ -116,9 +137,11 @@
     ],
     // Featured all-time record holders for the headline highlight card.
     recordHolderMen: { name:'Ashraf Uddin Ahmed Chunnu', goals:17, apps:50, span:'1979–1988',
-      note:'All-time highest international goal scorer for the Bangladesh national football team.' },
+      note:'All-time highest international goal scorer for the Bangladesh national football team.',
+      photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Retirement_of_Chunnu.jpg/330px-Retirement_of_Chunnu.jpg' },
     recordHolderWomen: { name:'Sabina Khatun', goals:38, apps:75, span:'2009–present',
-      note:'Record scorer and talisman of the Bangladesh women’s national team.' },
+      note:'Record scorer and talisman of the Bangladesh women’s national team.',
+      photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sabina_Khatun%2C_Bangladesh_women%27s_football_team_arrival_SAFF_Championship_winners_Dhaka_2022-09-21_%28PID-0020986%29_%28cropped%29.jpg/330px-Sabina_Khatun%2C_Bangladesh_women%27s_football_team_arrival_SAFF_Championship_winners_Dhaka_2022-09-21_%28PID-0020986%29_%28cropped%29.jpg' },
     mostCapsMen: [
       { name:'Jamal Bhuyan', g:84 }, { name:'Topu Barman', g:51 }, { name:'Anisur Rahman Zico', g:42 }, { name:'Sohel Rana', g:39 },
     ],
@@ -518,9 +541,9 @@
 
   // Hall of fame — legendary national players (men & women across eras)
   const legends = [
-    L({ name:'Kazi Salahuddin', era:'golden', pos:'FW', years:'1973–1984', caps:38, goals:8, no:9, note:'Bangladesh\u2019s first football superstar; later BFF President.', icon:'star', hof:true }),
-    L({ name:'Ashraf Uddin Chunnu', era:'golden', pos:'FW', years:'1978–1988', caps:34, goals:11, no:7, note:'Prolific striker of the Dhaka derby golden age.' }),
-    L({ name:'Sheikh Mohammad Aslam', era:'golden', pos:'FW', years:'1982–1991', caps:32, goals:13, no:10, note:'First Bangladeshi to score 100+ domestic league goals.' }),
+    L({ name:'Kazi Salahuddin', era:'golden', pos:'FW', years:'1973–1984', caps:38, goals:8, no:9, note:'Bangladesh\u2019s first football superstar; later BFF President.', icon:'star', hof:true, photo:'https://upload.wikimedia.org/wikipedia/commons/e/e2/Kazi_Salahuddin%2C_Ganabhaban_Dhaka_2016-06-28_%28cropped%29.jpg' }),
+    L({ name:'Ashraf Uddin Chunnu', era:'golden', pos:'FW', years:'1978–1988', caps:34, goals:11, no:7, note:'Prolific striker of the Dhaka derby golden age.', photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Retirement_of_Chunnu.jpg/330px-Retirement_of_Chunnu.jpg' }),
+    L({ name:'Sheikh Mohammad Aslam', era:'golden', pos:'FW', years:'1982–1991', caps:32, goals:13, no:10, note:'First Bangladeshi to score 100+ domestic league goals.', photo:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Sheikh_Mohammad_Aslam.png/330px-Sheikh_Mohammad_Aslam.png' }),
     L({ name:'Monem Munna', era:'silver', pos:'DF', years:'1986–1997', caps:40, goals:3, no:5, note:'The greatest defender in Bangladesh history; iconic No. 5.', icon:'shield', hof:true }),
     L({ name:'Kaiser Hamid', era:'silver', pos:'DF', years:'1985–1996', caps:36, goals:2, no:3, note:'Elegant centre-back and national captain.' }),
     L({ name:'Rumi', era:'silver', pos:'MF', years:'1988–1998', caps:30, goals:5, no:8, note:'Midfield engine of the 1990s national side.' }),

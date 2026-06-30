@@ -56,9 +56,16 @@ function Icon({ name, size = 18, sw = 2, fill, color, style }) {
 
 function Avatar({ p, size = 40, square }) {
   const bg = `linear-gradient(150deg, hsl(${p.hue} 52% 42%), hsl(${(p.hue + 40) % 360} 55% 30%))`;
+  // Show a real photo when available; fall back to the initials tile if it
+  // is missing or fails to load (broken link, offline, hotlink block).
+  const [broken, setBroken] = React.useState(false);
+  React.useEffect(() => setBroken(false), [p.photo]);
   return (
     <div className={'pavatar' + (square ? ' sq' : '')} style={{ width: size, height: size, fontSize: size * 0.36, background: bg }}>
-      {p.initials}
+      {p.photo && !broken
+        ? <img src={p.photo} alt={p.name || ''} loading="lazy" referrerPolicy="no-referrer" onError={() => setBroken(true)}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
+        : p.initials}
       {p.marquee && <span style={{ position:'absolute', bottom:-2, right:-2, width:size*0.4, height:size*0.4, borderRadius:'50%', background:'var(--bff-gold)', border:'2px solid var(--surface)', display:'grid', placeItems:'center' }}>
         <Icon name="star" size={size*0.2} fill="#fff" />
       </span>}
@@ -554,11 +561,12 @@ function HighlightsCard({ p, title = 'Match highlights', badge = 'Video' }) {
     </div>
   );
 }
-function PlayerPhoto({ slotId, size = 96 }) {
+function PlayerPhoto({ slotId, size = 96, photo }) {
   const ro = !(window.AuthStore && window.AuthStore.canEdit());
   const [src, setSrc] = React.useState(() => {
     try { return localStorage.getItem('bff-photo-' + slotId) || null; } catch (e) { return null; }
   });
+  const [photoBroken, setPhotoBroken] = React.useState(false);
   const fileRef = React.useRef(null);
   const onFile = (e) => {
     const file = e.target.files && e.target.files[0];
@@ -567,14 +575,17 @@ function PlayerPhoto({ slotId, size = 96 }) {
     reader.onload = () => { setSrc(reader.result); try { localStorage.setItem('bff-photo-' + slotId, reader.result); } catch (er) {} };
     reader.readAsDataURL(file);
   };
+  // An uploaded photo wins; otherwise show the real (Wikimedia) photo; else a placeholder.
+  const shown = src || (photo && !photoBroken ? photo : null);
   return (
     <div
       onClick={ro ? undefined : () => fileRef.current && fileRef.current.click()}
       style={{ width:size, height:size, flex:'none', borderRadius:14, overflow:'hidden', position:'relative',
         background:'var(--surface-3)', border:'1px solid var(--line)', display:'grid', placeItems:'center',
         cursor: ro ? 'default' : 'pointer' }}>
-      {src
-        ? <img src={src} alt="" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
+      {shown
+        ? <img src={shown} alt="" referrerPolicy="no-referrer" onError={() => { if (!src) setPhotoBroken(true); }}
+            style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'top center' }} />
         : <span style={{ fontSize: size*0.13, fontWeight:600, color:'var(--ink-faint)', textAlign:'center', padding:4 }}>{ro ? 'Photo' : 'Drop photo'}</span>}
       {!ro && <input ref={fileRef} type="file" accept="image/*" style={{ display:'none' }} onChange={onFile} />}
     </div>

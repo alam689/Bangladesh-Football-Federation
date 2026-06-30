@@ -226,7 +226,7 @@ function LegendProfile({ p, e, D, onBack }) {
         <div style={{ background:`linear-gradient(115deg, ${e.color}, color-mix(in srgb, ${e.color} 55%, #0c1210))`, padding:'26px var(--pad)', position:'relative', color:'#fff' }}>
           <div className="num" style={{ position:'absolute', right:-10, top:-30, fontSize:200, fontWeight:800, color:'#ffffff12', lineHeight:1 }}>{p.no}</div>
           <div className="row" style={{ gap:22, position:'relative', alignItems:'flex-start' }}>
-            <PlayerPhoto slotId={'legend-photo-'+p.name.replace(/\s+/g,'-').toLowerCase()} size={96} />
+            <PlayerPhoto slotId={'legend-photo-'+p.name.replace(/\s+/g,'-').toLowerCase()} size={96} photo={p.photo} />
             <div style={{ flex:1 }}>
               <div className="row" style={{ gap:10, marginBottom:6, flexWrap:'wrap' }}>
                 <PosTag pos={p.pos} />

@@ -438,7 +438,7 @@ function PlayerProfile({ id, go }) {
         <div style={{ background:`linear-gradient(115deg, hsl(${p.hue} 48% 26%), hsl(${(p.hue+40)%360} 50% 16%))`, padding:'26px var(--pad)', position:'relative', color:'#fff' }}>
           <div className="num" style={{ position:'absolute', right:-10, top:-30, fontSize:200, fontWeight:800, color:'#ffffff10', lineHeight:1 }}>{p.no}</div>
           <div className="row" style={{ gap:22, position:'relative', alignItems:'flex-start' }}>
-            <PlayerPhoto slotId={'player-photo-'+p.id} size={96} />
+            <PlayerPhoto slotId={'player-photo-'+p.id} size={96} photo={p.photo} />
             <div style={{ flex:1 }}>
               <div className="row" style={{ gap:10, marginBottom:6 }}>
                 <PosTag pos={p.pos} />
@@ -452,6 +452,7 @@ function PlayerProfile({ id, go }) {
                 <span><Icon name="pin" size={14} style={{ verticalAlign:-2 }} /> {p.district}</span>
                 <span>{isW ? "Women's" : "Men's"} National Team · #{p.no}</span>
               </div>
+              {p.photo && <div style={{ fontSize:10.5, opacity:.7, marginTop:10 }}>Photo: Wikimedia Commons (CC)</div>}
             </div>
             {AuthStore.canEdit() && <div className="row" style={{ gap:8 }}>
               <button className="btn ghost sm" title="Edit player" style={{ background:'#ffffff18', color:'#fff', borderColor:'#ffffff33' }} onClick={()=>setEditing(true)}>
@@ -1192,7 +1193,12 @@ function Records({ go }) {
         <div style={{ position:'absolute', right:-50, top:-50, width:200, height:200, borderRadius:'50%', background:'rgba(255,255,255,.07)' }}></div>
         <div style={{ position:'absolute', right:80, bottom:-70, width:150, height:150, borderRadius:'50%', background:'rgba(227,167,47,.18)' }}></div>
         <div className="row" style={{ gap:20, padding:'22px 24px', position:'relative', flexWrap:'wrap' }}>
-          <div style={{ width:78, height:78, borderRadius:18, background:'var(--bff-gold)', color:'#3a2a00', display:'grid', placeItems:'center', fontWeight:900, fontSize:28, fontFamily:'var(--ff-display)', flex:'none' }}>{initials}</div>
+          <div style={{ width:78, height:78, borderRadius:18, background:'var(--bff-gold)', color:'#3a2a00', display:'grid', placeItems:'center', fontWeight:900, fontSize:28, fontFamily:'var(--ff-display)', flex:'none', overflow:'hidden', position:'relative' }}>
+            {holder.photo
+              ? <img src={holder.photo} alt={holder.name} referrerPolicy="no-referrer" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'top center' }} onError={(e)=>{ e.currentTarget.style.display='none'; }} />
+              : null}
+            <span style={{ position:'relative' }}>{initials}</span>
+          </div>
           <div style={{ flex:1, minWidth:240 }}>
             <div className="row" style={{ gap:8, marginBottom:5 }}>
               <Icon name="trophy" size={15} color="var(--bff-gold)" />
@@ -1200,6 +1206,7 @@ function Records({ go }) {
             </div>
             <div style={{ fontSize:24, fontWeight:800, fontFamily:'var(--ff-display)', lineHeight:1.15 }}>{holder.name}</div>
             <div style={{ fontSize:13.5, opacity:.9, marginTop:6, maxWidth:520, lineHeight:1.5 }}>{holder.note}</div>
+            {holder.photo && <div style={{ fontSize:10.5, opacity:.6, marginTop:7 }}>Photo: Wikimedia Commons (CC)</div>}
           </div>
           <div className="row" style={{ gap:28, flex:'none' }}>
             <div style={{ textAlign:'center' }}>
