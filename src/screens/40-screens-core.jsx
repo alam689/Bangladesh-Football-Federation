@@ -1172,7 +1172,9 @@ function Records({ go }) {
   const [g, setG] = React.useState('men');
   const scorers = g==='men'?D.records.topScorersMen:D.records.topScorersWomen;
   const caps = g==='men'?D.records.mostCapsMen:D.records.mostCapsWomen;
+  const holder = g==='men'?D.records.recordHolderMen:D.records.recordHolderWomen;
   const maxG = Math.max(...scorers.map(s=>s.g));
+  const initials = (holder.name.split(' ').map(w=>w[0]).slice(0,2).join('')||'').toUpperCase();
 
   return (
     <div className="content-inner fade-in">
@@ -1183,6 +1185,37 @@ function Records({ go }) {
       <div className="row" style={{ gap:8, marginBottom:'var(--gap)' }}>
         <button className={'chip tab'+(g==='men'?' on':'')} onClick={()=>setG('men')} style={g==='men'?{}:{}}>Men's records</button>
         <button className={'chip tab'+(g==='women'?' on':'')} onClick={()=>setG('women')} style={g==='women'&&true?{ background:'var(--bff-red)', borderColor:'transparent', color:'#fff' }:{}}>Women's records</button>
+      </div>
+
+      {/* All-time record holder — headline highlight */}
+      <div className="card" style={{ marginBottom:'var(--gap)', overflow:'hidden', background:'linear-gradient(135deg, var(--primary-deep), var(--primary))', color:'#fff', position:'relative' }}>
+        <div style={{ position:'absolute', right:-50, top:-50, width:200, height:200, borderRadius:'50%', background:'rgba(255,255,255,.07)' }}></div>
+        <div style={{ position:'absolute', right:80, bottom:-70, width:150, height:150, borderRadius:'50%', background:'rgba(227,167,47,.18)' }}></div>
+        <div className="row" style={{ gap:20, padding:'22px 24px', position:'relative', flexWrap:'wrap' }}>
+          <div style={{ width:78, height:78, borderRadius:18, background:'var(--bff-gold)', color:'#3a2a00', display:'grid', placeItems:'center', fontWeight:900, fontSize:28, fontFamily:'var(--ff-display)', flex:'none' }}>{initials}</div>
+          <div style={{ flex:1, minWidth:240 }}>
+            <div className="row" style={{ gap:8, marginBottom:5 }}>
+              <Icon name="trophy" size={15} color="var(--bff-gold)" />
+              <span style={{ fontSize:11.5, fontWeight:700, letterSpacing:'.14em', textTransform:'uppercase', color:'var(--bff-gold)' }}>All-time record holder</span>
+            </div>
+            <div style={{ fontSize:24, fontWeight:800, fontFamily:'var(--ff-display)', lineHeight:1.15 }}>{holder.name}</div>
+            <div style={{ fontSize:13.5, opacity:.9, marginTop:6, maxWidth:520, lineHeight:1.5 }}>{holder.note}</div>
+          </div>
+          <div className="row" style={{ gap:28, flex:'none' }}>
+            <div style={{ textAlign:'center' }}>
+              <div className="num" style={{ fontSize:34, fontWeight:900, color:'var(--bff-gold)' }}>{holder.goals}</div>
+              <div style={{ fontSize:11, opacity:.85, textTransform:'uppercase', letterSpacing:'.08em' }}>Goals</div>
+            </div>
+            <div style={{ textAlign:'center' }}>
+              <div className="num" style={{ fontSize:34, fontWeight:900 }}>{holder.apps}</div>
+              <div style={{ fontSize:11, opacity:.85, textTransform:'uppercase', letterSpacing:'.08em' }}>Caps</div>
+            </div>
+            <div style={{ textAlign:'center' }}>
+              <div className="num" style={{ fontSize:20, fontWeight:800, marginTop:7 }}>{holder.span}</div>
+              <div style={{ fontSize:11, opacity:.85, textTransform:'uppercase', letterSpacing:'.08em' }}>Era</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="grid" style={{ gridTemplateColumns:'1.3fr 1fr' }}>

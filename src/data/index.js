@@ -99,20 +99,26 @@
 
   // ---------- Records ----------
   const records = {
+    // All-time international goal scorers (men) — Bangladesh national team.
     topScorersMen: [
-      { name:'Sheikh Salahuddin', span:'1972–1984', g:9 },
-      { name:'Kazi Salahuddin', span:'1973–1985', g:8 },
-      { name:'Jamal Bhuyan', span:'2013–', g:3 },
-      { name:'Rakib Hossain', span:'2020–', g:7 },
-      { name:'Sheikh Morsalin', span:'2022–', g:4 },
+      { name:'Ashraf Uddin Ahmed Chunnu', span:'1979–1988 · 50 caps', g:17 },
+      { name:'Zahid Ameli', span:'1980s', g:15 },
+      { name:'Sheikh Mohammad Aslam', span:'1982–1994', g:14 },
+      { name:'Alfaz Ahmed', span:'1993–2007', g:11 },
+      { name:'Kazi Salahuddin · Wasim · Shakawat Rony', span:'Joint 5th · 8 goals each', g:8 },
     ],
     topScorersWomen: [
-      { name:'Sabina Khatun', span:'2009–', g:38 },
+      { name:'Sabina Khatun', span:'2009– · 75 caps', g:38 },
       { name:'Krishna Rani Sarkar', span:'2016–', g:24 },
       { name:'Sirat Jahan Swapna', span:'2018–2023', g:18 },
       { name:'Ritu Porna Chakma', span:'2021–', g:14 },
       { name:'Tahura Khatun', span:'2018–', g:12 },
     ],
+    // Featured all-time record holders for the headline highlight card.
+    recordHolderMen: { name:'Ashraf Uddin Ahmed Chunnu', goals:17, apps:50, span:'1979–1988',
+      note:'All-time highest international goal scorer for the Bangladesh national football team.' },
+    recordHolderWomen: { name:'Sabina Khatun', goals:38, apps:75, span:'2009–present',
+      note:'Record scorer and talisman of the Bangladesh women’s national team.' },
     mostCapsMen: [
       { name:'Jamal Bhuyan', g:84 }, { name:'Topu Barman', g:51 }, { name:'Anisur Rahman Zico', g:42 }, { name:'Sohel Rana', g:39 },
     ],
